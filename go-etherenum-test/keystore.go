@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/ethereum/go-ethereum/accounts/keystore"
 	"io/ioutil"
 	"log"
 	"os"
+
+	"github.com/ethereum/go-ethereum/accounts/keystore"
 )
 
 func createKs() {
@@ -16,10 +17,11 @@ func createKs() {
 		log.Fatal(err)
 	}
 
-	fmt.Println(account.Address.Hex()) // 0x20F8D42FB0F667F2E53930fed426f225752453b3
+	fmt.Println(account.Address.Hex()) // 0xF37836a122cF8bDc3661F99a63A8B9DbABA5aa82
 }
+
 func importKs() {
-	file := "/tmp/UTC--2018-07-04T09-58-30.122808598Z--20f8d42fb0f667f2e53930fed426f225752453b3"
+	file := "./tmp/UTC--2024-08-05T12-23-34.671143000Z--f37836a122cf8bdc3661f99a63a8b9dbaba5aa82"
 	ks := keystore.NewKeyStore("./tmp", keystore.StandardScryptN, keystore.StandardScryptP)
 	jsonBytes, err := ioutil.ReadFile(file)
 	if err != nil {
@@ -29,7 +31,7 @@ func importKs() {
 	password := "secret"
 	account, err := ks.Import(jsonBytes, password, password)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal(err) //should throw err:account already exists
 	}
 
 	fmt.Println(account.Address.Hex()) // 0x20F8D42FB0F667F2E53930fed426f225752453b3
@@ -38,6 +40,7 @@ func importKs() {
 		log.Fatal(err)
 	}
 }
+
 func main() {
 	//createKs()
 	importKs()
